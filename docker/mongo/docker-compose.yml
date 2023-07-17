@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=database
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 0.0.0.0:27017:27017
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.10
+
+networks:
+  mynetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24

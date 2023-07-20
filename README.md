@@ -5,7 +5,7 @@ On Ubuntu 20
 
 """
 python3 -m venv venv
-source venv/bin/activate
+./venv/Scripts/Activate.ps1
 """
 
 Para este projeto é necessário instalar algumas bibliotecas do python,

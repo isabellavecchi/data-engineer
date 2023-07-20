@@ -1,0 +1,50 @@
+version: '3'
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: DockerfileMongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=petMatch
+    volumes:
+      - ./mongo/data:/mongo/data/db
+    ports:
+      - 0.0.0.0:27017:27017
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.10
+
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=petMatch
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    ports:
+      - 0.0.0.0:5432:5432
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.11
+
+  myapp:
+    build:
+      context: ./
+      dockerfile: DockerfileApp
+    depends_on:
+      - mongodb
+      - postgresql
+    ports:
+      - 0.0.0.0:80:80
+    networks:
+      mynetwork:
+
+networks:
+  mynetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24

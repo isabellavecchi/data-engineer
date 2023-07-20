@@ -4,13 +4,13 @@ from bson import ObjectId
 from models.address import Address
 
 class User():
-    def __init__(self, name, birthDate, addressStreet, addressNumber, addressCity, addressState, addressCountry, id=None):
+    def __init__(self, name, birthDate, addressStreet, addressNumber, addressCity, addressState, addressCountry, pets=None, id=None):
         self._id = ObjectId(id) if id else ObjectId()
         self.name = name
         self.address = Address(addressStreet, addressNumber, addressCity, addressState, addressCountry)
         # self.birthDate = datetime.strptime(birthDate, '%d/%m/%Y')
         self.birthDate = birthDate
-        self.pets = []
+        self.pets = pets if pets else []
     
     def to_dict(self):
         return {

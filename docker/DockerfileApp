@@ -1,0 +1,20 @@
+FROM ubuntu:20.04
+
+RUN apt-get update -y && \
+    apt-get install -y mongodb-clients git
+
+WORKDIR /app
+
+# Clone the project from GitHub
+RUN git clone https://github.com/isabellavecchi/Ps_Reprograma.git .
+
+# Install project dependencies
+# COPY requirements.txt .
+RUN apt-get install -y python3-pip && \
+    pip3 install --no-cache-dir -r requirements.txt
+
+# # Expose any necessary ports
+EXPOSE 80
+
+# # Set the default command to run when the container starts
+CMD [ "python3", "src/main.py" ]

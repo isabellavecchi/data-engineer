@@ -5,9 +5,9 @@ from models.user import User
 from models.postgresTables import TbUser,TbPet,TbUserPet
 from connectors.connectPostgres import ConectaPostgreSQL
 from connectors.connectMongo import ConectaMongoDB
-# from repositories.postgresRepository import 
-from repositories.mongoRepository import UserMongoRepository
-from services.mongoService import UserMongoService
+from repositories.mongoRepository import UserMongoRepository, PetMongoRepository
+from services.mongoService import UserMongoService, PetMongoService
+from repositories.postgresRepository import UserPostgresRepository
 
 # Id para a planilha do google docs
 file_id = '1CvfQISaVMObNajt_WmOJxFgTE0X2zhi_avX2wSFfl4g'
@@ -16,41 +16,39 @@ output_file = 'data.xlsx'
 # Create an instance of the DataReader class
 data_reader = DataReader(file_id, output_file)
 
-# Read specific sheets and populate class objects
-df_users = data_reader.getUsersWithAddressDF()
-df_pets = data_reader.getPetsDF()
-
-print(df_users.head())
-print(df_pets.head())
-
 # # Instantiate the MongoDBConnector
-mongo_connector = ConectaMongoDB(host='192.168.0.10', port=27017, database='database', username='admin', password='password')
+mongo_connector = ConectaMongoDB(connection_string='mongodb+srv://admin:4Enta&2@cluster0.pegwykf.mongodb.net/', database='reprograma')
 
 # # Connect to MongoDB
 mongo_connector.connect()
 userMongoRepository = UserMongoRepository(mongo_connector)
+petMongoRepository = PetMongoRepository(mongo_connector)
 userMongoService = UserMongoService(userMongoRepository)
+petMongoService = PetMongoService(petMongoRepository)
 
-userMongoService.addUsersFromDF(df_users)
+# data_reader.df_pets = data_reader.getPets()
+# petMongoIds = petMongoService.addPetsFromDF(data_reader.df_pets)
+# data_reader.dfPets, data_reader.dfUserPets = data_reader.updatePetIds(petMongoIds)
 
+# data_reader.df_users = data_reader.getUsersWithAddress()
+# data_reader.df_users = data_reader.mergeUsersWithPets()
 
-# # Insert a document
-# document = {'name': 'John Doe', 'age': 30}
-# mongo_connector.insert_document('mycollection', document)
+# print(data_reader.df_users.head(8))
+# print(data_reader.df_pets.head())
+# userMongoService.addUsersFromDF(data_reader.df_users)
 
-# # Find documents
-# documents = mongo_connector.find_documents('mycollection')
-# for document in documents:
-#     print(document)
+# userMongoService.findUsersFromCountry("BR")
+# userMongoService.findUsersWithPets()
+# petMongoService.findPetOwners()
+petMongoService.findPetTypes('cat')
 
-# # Update documents
-# query = {'age': {'$lt': 40}}
-# update = {'$set': {'age': 40}}
-# mongo_connector.update_document('mycollection', query, update)
+postgres_connector = ConectaPostgreSQL('postgresql+psycopg2://postgres://postgres:senha@localhost/reprograma')
 
-# # Delete documents
-# query = {'age': 40}
-# mongo_connector.delete_documents('mycollection', query)
+postgres_connector.connect()
+userPostgresRepository = UserPostgresRepository(postgres_connector)
+# petPostgresRepository = PetPostgresRepository(postgres_connector)
+# userPostgresService = UserPostgresService(userPostgresRepository)
+# petPostgresService = PetPostgresService(petPostgresRepository)
 
-# # Disconnect from MongoDB
-# mongo_connector.disconnect()
+mongo_connector.disconnect()
+postgres_connector.disconnect()

@@ -17,7 +17,7 @@ output_file = 'data.xlsx'
 data_reader = DataReader(file_id, output_file)
 
 # # Instantiate the MongoDBConnector
-mongo_connector = ConectaMongoDB(connection_string='mongodb+srv://admin:4Enta&2@cluster0.pegwykf.mongodb.net/', database='reprograma')
+mongo_connector = ConectaMongoDB(connection_string='mongodb+srv://admin:password@192.168.0.10', database='petMatch')
 
 # # Connect to MongoDB
 mongo_connector.connect()
@@ -26,23 +26,23 @@ petMongoRepository = PetMongoRepository(mongo_connector)
 userMongoService = UserMongoService(userMongoRepository)
 petMongoService = PetMongoService(petMongoRepository)
 
-# data_reader.df_pets = data_reader.getPets()
-# petMongoIds = petMongoService.addPetsFromDF(data_reader.df_pets)
-# data_reader.dfPets, data_reader.dfUserPets = data_reader.updatePetIds(petMongoIds)
+data_reader.df_pets = data_reader.getPets()
+petMongoIds = petMongoService.addPetsFromDF(data_reader.df_pets)
+data_reader.dfPets, data_reader.dfUserPets = data_reader.updatePetIds(petMongoIds)
 
-# data_reader.df_users = data_reader.getUsersWithAddress()
-# data_reader.df_users = data_reader.mergeUsersWithPets()
+data_reader.df_users = data_reader.getUsersWithAddress()
+data_reader.df_users = data_reader.mergeUsersWithPets()
 
-# print(data_reader.df_users.head(8))
-# print(data_reader.df_pets.head())
-# userMongoService.addUsersFromDF(data_reader.df_users)
+print(data_reader.df_users.head(8))
+print(data_reader.df_pets.head())
+userMongoService.addUsersFromDF(data_reader.df_users)
 
-# userMongoService.findUsersFromCountry("BR")
-# userMongoService.findUsersWithPets()
-# petMongoService.findPetOwners()
+userMongoService.findUsersFromCountry("BR")
+userMongoService.findUsersWithPets()
+petMongoService.findPetOwners()
 petMongoService.findPetTypes('cat')
 
-postgres_connector = ConectaPostgreSQL('postgresql+psycopg2://postgres://postgres:senha@localhost/reprograma')
+postgres_connector = ConectaPostgreSQL('postgresql+psycopg2://postgres://admin:password@192.168.0.11/petMatch')
 
 postgres_connector.connect()
 userPostgresRepository = UserPostgresRepository(postgres_connector)

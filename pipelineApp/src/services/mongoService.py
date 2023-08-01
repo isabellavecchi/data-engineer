@@ -35,6 +35,7 @@ class PetMongoService():
         self.pets = []
 
     def addPetsFromDF(self, petsDF: pd.DataFrame):
+        data_reader.df_pets = data_reader.getPets()
         for row in petsDF.itertuples():
             pet = Pet(name=row.name, bride=row.bride, birthDate=row.birthDate,
                     petType=row.type, weight=row.weight)

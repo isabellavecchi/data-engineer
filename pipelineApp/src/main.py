@@ -1,4 +1,4 @@
-from readers.readExcel import DataReader
+from readers.dataExcelRW import DataExcelRW
 from models.address import Address
 from models.pet import Pet
 from models.user import User
@@ -13,8 +13,8 @@ from repositories.postgresRepository import UserPostgresRepository
 file_id = '1CvfQISaVMObNajt_WmOJxFgTE0X2zhi_avX2wSFfl4g'
 output_file = 'data.xlsx'
 
-# Create an instance of the DataReader class
-data_reader = DataReader(file_id, output_file)
+# Create an instance of the DataExcelRW class
+data_reader = DataExcelRW(file_id, output_file)
 
 # # Instantiate the MongoDBConnector
 mongo_connector = ConectaMongoDB(connection_string='mongodb+srv://admin:password@192.168.0.10', database='petMatch')

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   mongodb:
     image: mongo:latest
@@ -17,7 +17,7 @@ services:
   postgresql:
     image: postgres:latest
     environment:
-      - POSTGRES_USER=admin
+      - POSTGRES_USER=reprograma
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=petMatch
     volumes:
@@ -39,6 +39,18 @@ services:
       - 0.0.0.0:80:80
     networks:
       mynetwork:
+
+  rabbitmq:
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - 0.0.0.0:5672:5672
+      - 0.0.0.0:15672:15672
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.12
 
 networks:
   mynetwork:

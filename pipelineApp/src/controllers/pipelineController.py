@@ -33,23 +33,5 @@ def listar():
     else:
         abort(403) #status 403 = proibido
 
-@app.route('/actions', methods=['POST','GET'])
-def actions():
-    if request.method == 'POST':
-        return render_template('actions.html', matricula=request.form.to_dict()["matricula"])
-        # return request.form.to_dict()["matricula"]
-       #colocar o serviço de mensageria para buscar o array de json
-    else:
-        abort(403) #status 403 = proibido
-
-@app.route('/delete', methods=['POST','GET'])
-def delete():
-    if request.method == 'POST':
-        return "usuario deletado"
-        # return request.form.to_dict()["matricula"]
-       #colocar o serviço de mensageria para buscar o array de json
-    else:
-        abort(403) #status 403 = proibido
-
 if __name__ == '__main__':
     app.run(debug=True)

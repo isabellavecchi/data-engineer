@@ -8,6 +8,10 @@ python3 -m venv venv
 ./venv/Scripts/Activate.ps1
 """
 
+Estou adicionando RabbitMQ a esta aplicação.
+Aqui está uma onde já existe esta parte implementada:
+https://github.com/isabellavecchi/Arquitetura-de-Software-Aplicada/tree/master/trab1-rabbitMQ
+
 Para este projeto é necessário instalar algumas bibliotecas do python,
 como estou utilizando um ambiente virtual, ele lista todas as dependências
 do meu projeto em um arquivo de saída com o seguinte comando:

@@ -1,6 +1,6 @@
 from new_task import Tasker
 
-insertStudent = Tasker('student')
-insertStudent.send('get','isa')
+insertPet = Tasker('pet')
+insertPet.send('get','isa')
 
-# insertStudent.main()
+# insertPet.main()

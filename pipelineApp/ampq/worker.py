@@ -3,7 +3,7 @@ sys.path.insert(1, '/mnt/c/Users/isabe/Documents/Documentos/UFU/2022-1/ASA/trab1
 from src.connectors.connectMongo import ConectaMongoDB 
 from src.connectors.connectPostgres import ConectaPostgreSQL
 from src.services.mongoService import UserMongoService, PetMongoService
-from src.services.postgresService import
+from src.services.postgresService import UserPostgresService, PetPostgresService
 
 class Worker():
 
@@ -59,18 +59,10 @@ class Worker():
             message = message.split('#')
             action = message[0]
             json_args = json.loads(message[1])
-            if(action == 'insert'):
-                self.insert(json_args)
+            if(action == 'loadGoogleExcel'):
+                self.loadGoogleExcel(json_args)
             elif(action == 'get'):
                 self.get(json_args)
-            elif(action == 'update'):
-                self.update(json_args)
-            elif(action == 'delete'):
-                self.delete(json_args)
-            conexao = ConectaBD()
-            estudanteDAO = EstudanteDAO(conexao)
-            print(message[1])
-            estudanteDAO.addEstudanteJson(json_args)
         except KeyboardInterrupt:
             print('Interrupted')
             try:
@@ -78,7 +70,7 @@ class Worker():
             except SystemExit:
                 os._exit(0)
 
-    def insert(self,json_estudante):
+    def loadGoogleExcel(self,json_estudante):
         try:
             conexao = ConectaBD()
             estudanteDAO = EstudanteDAO(conexao)
